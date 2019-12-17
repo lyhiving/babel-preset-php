@@ -34,6 +34,7 @@ describe('AST translation', function() {
         translates('fun(...[1,2,3]);');
         translates('$a = <<<HERE\nhi\nHERE;', 'var a = `hi\\n`;');
         translates("$a = <<<'NOW'\nhi\nNOW;", 'var a = "hi";');
+        translates("$a['x'] ?? 8", "a.x || 8;");
     });
 
     it('Builtins', function() {
