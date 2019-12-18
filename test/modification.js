@@ -48,7 +48,8 @@ describe('AST modification', function() {
     });
 
     it('Functions', function() {
-        translates("function bar() {$a = func_get_args();}", 'function bar() {var a = arguments;};');
+        translates("function bar() {$a = func_get_args();}", 'function bar() {var a = Array.from(arguments);};');
+        translates("function bar() {func_get_args();}", 'function bar() {arguments;};');
     });
 
     it('Class', function() {
