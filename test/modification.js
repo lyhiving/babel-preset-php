@@ -22,7 +22,11 @@ describe('AST modification', function() {
         translates('str_replace(1,2,$x);');
         translates('str_replace(1,2,$x,1);', 'x.replace(1,2);');
         translates('str_replace(1,2,$x,$z);');
-        translates('trim($x,"x");');
+        translates('trim($x,"x");', 'x.replace(/^x*|x*$/g, "");');
+        translates('ltrim($x, char);', "x.replace(new Regexp('^[' + char + ']*'), \"\");");
+        translates('ltrim($x,"]\\d");', 'x.replace(/^[\\]\\d]*/, "");');
+        translates('explode(".", ltrim($name,"."))', 'name.replace(/^[\\.]*/, "").split(".");');
+        translates('explode(".", rtrim($name))', 'name.trimRight().split(".");');
         translates('$_ENV["X"];', 'process.env.X;');
     });
 
