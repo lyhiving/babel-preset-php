@@ -87,6 +87,7 @@ describe('AST modification', function() {
         translates("json_encode($z);", 'JSON.stringify(z);');
         translates("json_decode($z);", 'JSON.parse(z);');
         translates("json_decode($z, false);", 'JSON.parse(z);');
+        translates("range(2, 16/2, $step);", 'Array(Math.ceil((16 / 2 - 2) / step)).fill(2).map((x, y) => x + y * step);');
     });
 
 });
