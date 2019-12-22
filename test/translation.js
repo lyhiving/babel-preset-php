@@ -30,7 +30,7 @@ describe('AST translation', function() {
         translates('(bool)"1";', '!!"1";');
         translates('(string)$x;', 'String(x);');
         translates('(object)$x;', 'Object(x);');
-        translates('(array)$x;', 'Array.from(x);');
+        translates('(array)$x;', 'Array.from(x || "");');
         translates('fun(...[1,2,3]);');
         translates('$a = <<<HERE\nhi\nHERE;', 'var a = `hi\\n`;');
         translates("$a = <<<'NOW'\nhi\nNOW;", 'var a = "hi";');
