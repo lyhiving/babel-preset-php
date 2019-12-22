@@ -82,6 +82,9 @@ describe('AST modification', function() {
         translates("function_exists('bla');", '"function" === typeof bla;');
         translates("function_exists($z);", '"function" === typeof global[z];');
         translates("class_exists($z);", '"function" === typeof global[z];');
+        translates("json_encode($z);", 'JSON.stringify(z);');
+        translates("json_decode($z);", 'JSON.parse(z);');
+        translates("json_decode($z, false);", 'JSON.parse(z);');
     });
 
 });
