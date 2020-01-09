@@ -78,6 +78,7 @@ describe('AST modification', function() {
         translates("array_reduce($a,function(){});", 'a.reduce(() => {});');
         translates("array_filter($a,function(){});", 'a.filter(() => {});');
         translates("array_map(function(){},$a);", 'a.map(() => {});');
+        translates("array_unique([1,2]);", 'Array.from(new Set([1,2]));');
         translates("implode('str', $a);", 'a.join("str");');
         translates("explode('str', $a, 2);", 'a.split("str", 2);');
         translates("function_exists('bla');", '"function" === typeof bla;');
