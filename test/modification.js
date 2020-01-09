@@ -28,6 +28,7 @@ describe('AST modification', function() {
 
     it('Preg', function() {
         translates('preg_replace("#t\\*ex*t#i", $y, $z);', 'z.replace(/t\\*ex*t/gi,y);');
+        translates('preg_replace("!http://foo/!iuDs", $y, $z);', 'z.replace(/http:\\/\\/foo\\//giu,y);');
         translates('preg_replace_callback("/(reg)/", $y, $z);', 'z.replace(/(reg)/g,y);');
         translates('preg_replace("$dynamic", $y, $z);', 'preg_replace(`${dynamic}`, y, z);');
     });
