@@ -37,6 +37,12 @@ describe('AST translation', function() {
         translates("$a['x'] ?? 8", "a.x || 8;");
     });
 
+    it('Reserved keyword', function() {
+        translates("$class = 0", "var class_r = 0;");
+        translates("function f($default = 1) {}", "function f(default_r = 1) {};");
+        translates("$x = ['try' => 2]", "var x = {try: 2};");
+    });
+
     it('Builtins', function() {
         translates('echo "foo",$bar;', 'echo("foo", bar);');
         translates(' ?>x', 'echo("x");');
@@ -82,7 +88,7 @@ describe('AST translation', function() {
         translates('"foo${bar}$quz"', '`foo${bar}${quz}`;');
         translates('"foo${2+2}"', '`foo${global[2+2]}`;');
 
-        translates('$$var', 'global[var];');
+        translates('$$var', 'global[var_r];');
 
         translates('"foo${$varvar}"', '`foo${global[varvar]}`;');
     });
@@ -192,18 +198,18 @@ describe('AST translation', function() {
         translates(`class Foo {
         function annotated($untyped, Cls\\Name $class, self $self, array $array, callable $callable, bool $bool, float $float, int $int, string $string, iterable $iter) {}}`,
         `class Foo {
-        annotated(untyped, class: Cls.Name, self: Foo, array: {} | any[], callable: Function, bool: boolean, float: number, int: number, string: string, iter: {} | any[]) {}};`);
+        annotated(untyped, class_r: Cls.Name, self: Foo, array: {} | any[], callable: Function, bool: boolean, float: number, int: number, string: string, iter: {} | any[]) {}};`);
         translates(`class Foo {
         function annotated($untyped = null, Cls\\Name $class = null, self $self = null, array $array = null,
         callable $callable = null, bool $bool = null, float $float = null, int $int = null, string $string = null, iterable $iter = null) {}}`,
         `class Foo {
-        annotated(untyped = undefined, class: ?Cls.Name = undefined, self: ?Foo = undefined, array: ?{} | any[] = undefined,
+        annotated(untyped = undefined, class_r: ?Cls.Name = undefined, self: ?Foo = undefined, array: ?{} | any[] = undefined,
         callable: ?Function = undefined, bool: ?boolean = undefined, float: ?number = undefined, int: ?number = undefined, string: ?string = undefined, iter: ?{} | any[] = undefined) {}};`);
         translates(`class Foo {
         function annotated($untyped, ?Cls\\Name $class, ?self $self, ?array $array,
         ?callable $callable, ?bool $bool, ?float $float, ?int $int, ?string $string, ?iterable $iter) {}}`,
         `class Foo {
-        annotated(untyped, class: ?Cls.Name, self: ?Foo, array: ?{} | any[],
+        annotated(untyped, class_r: ?Cls.Name, self: ?Foo, array: ?{} | any[],
         callable: ?Function, bool: ?boolean, float: ?number, int: ?number, string: ?string, iter: ?{} | any[]) {}};`);
     });
 })
