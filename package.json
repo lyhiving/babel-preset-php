@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-php",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Convert PHP7 to JavaScript via Babel preset",
   "main": "index.js",
   "scripts": {
