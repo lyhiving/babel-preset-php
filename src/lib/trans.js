@@ -17,11 +17,12 @@ const default_map = {
 var map = {};
 var encapsulate_ns;
 
-exports.translateProgram = function translateProgram(program, options = {default_map: true, encapsulate_ns: false}) {
+exports.default = function (program, options = {default_map: true, encapsulate_ns: false}) {
     assert.equal(program.kind, "program");
+    map = {};
     if (options) {
         Object.assign(map,
-                      options.default_map ? default_map : {},
+                      options.default_map === false ? {} : default_map,
                       options.map || {});
         encapsulate_ns = options.encapsulate_ns;
     }
@@ -36,7 +37,7 @@ exports.translateProgram = function translateProgram(program, options = {default
             "body": [],
         }, program.children, scope),
     };
-}
+};
 
 function mapIdent(name) {
     if (name in map && name !== 'constructor') {
