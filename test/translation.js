@@ -203,13 +203,13 @@ describe('AST translation', function() {
         function annotated($untyped = null, Cls\\Name $class = null, self $self = null, array $array = null,
         callable $callable = null, bool $bool = null, float $float = null, int $int = null, string $string = null, iterable $iter = null) {}}`,
         `class Foo {
-        annotated(untyped = undefined, class_r: ?Cls.Name = undefined, self: ?Foo = undefined, array: ?{} | any[] = undefined,
-        callable: ?Function = undefined, bool: ?boolean = undefined, float: ?number = undefined, int: ?number = undefined, string: ?string = undefined, iter: ?{} | any[] = undefined) {}};`);
+        annotated(untyped = undefined, class_r: ?Cls.Name = undefined, self: ?Foo = undefined, array: ?({} | any[]) = undefined,
+        callable: ?Function = undefined, bool: ?boolean = undefined, float: ?number = undefined, int: ?number = undefined, string: ?string = undefined, iter: ?({} | any[]) = undefined) {}};`);
         translates(`class Foo {
         function annotated($untyped, ?Cls\\Name $class, ?self $self, ?array $array,
         ?callable $callable, ?bool $bool, ?float $float, ?int $int, ?string $string, ?iterable $iter) {}}`,
         `class Foo {
-        annotated(untyped, class_r: ?Cls.Name, self: ?Foo, array: ?{} | any[],
-        callable: ?Function, bool: ?boolean, float: ?number, int: ?number, string: ?string, iter: ?{} | any[]) {}};`);
+        annotated(untyped, class_r: ?Cls.Name, self: ?Foo, array: ?({} | any[]),
+        callable: ?Function, bool: ?boolean, float: ?number, int: ?number, string: ?string, iter: ?({} | any[])) {}};`);
     });
 })

@@ -1,8 +1,8 @@
-const assert = require('assert');
-const babel = require("babel-core");
-const phpPreset = require("../index");
+const assert = require('assert'),
+      babel = require("@babel/core"),
+      phpPreset = require("../src/index");
 
-module.exports = function translates(phpSrc, expected = undefined) {
+module.exports = function translates(phpSrc, expected = undefined, preset_options = {}) {
     let ignoreSemi = false;
     if (undefined === expected) {
         expected = phpSrc.replace(/\$/g, '').replace(/;/g, '');
@@ -11,7 +11,7 @@ module.exports = function translates(phpSrc, expected = undefined) {
     let out;
     try {
         out = babel.transform(`<?php ${phpSrc}`, {
-            presets: [phpPreset],
+            presets: [[phpPreset, preset_options]],
         }).code;
     } catch(e) {
         e.message += `\nin ${phpSrc}`;
